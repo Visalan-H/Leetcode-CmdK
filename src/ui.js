@@ -1,5 +1,3 @@
-// src/ui.js
-
 const CmdkUI = {
     overlayId: 'leetcode-cmdk-overlay',
     
@@ -46,6 +44,7 @@ const CmdkUI = {
     render: (preferredLang) => {
         // Create Container
         let container = document.getElementById('leetcode-cmdk-container');
+        //reuse container if exists 
         if (!container) {
             container = document.createElement('div');
             container.id = 'leetcode-cmdk-container';
@@ -115,7 +114,8 @@ const CmdkUI = {
                     <div class="snippet-code-preview">${CmdkUI.escapeHtml(s.code)}</div>
                 </div>
                 <div class="snippet-actions">
-                    <button class="copy-btn" data-code="${CmdkUI.escapeHtml(s.code)}">Copy</button>
+                    <button class="insert-btn" data-code="${CmdkUI.escapeHtml(s.code)}">Insert</button>
+                    <button class="copy-btn" data-code="${CmdkUI.escapeHtml(s.code)}" title="Copy to Clipboard">Copy</button>
                 </div>
             </div>
         `).join('');
@@ -147,15 +147,30 @@ const CmdkUI = {
              CmdkUI.setLanguage(newLang, modal);
         });
 
-        // Copy
+        // Click Delegation
         body.addEventListener('click', (e) => {
-            const btn = e.target.closest('.copy-btn') || 
-                       (e.target.closest('.snippet-item')?.querySelector('.copy-btn'));
+            const code = e.target.dataset.code; 
             
-            if (btn && (e.target.classList.contains('copy-btn') || !e.target.closest('.snippet-actions'))) {
-                // If clicked button OR clicked row (but not actions area if we had other buttons)
-                // Logic: Click button -> copy. Click row -> find button -> copy.
-                CmdkUI.triggerCopy(btn.dataset.code, btn);
+            // 1. Explicit Copy Button
+            if (e.target.classList.contains('copy-btn')) {
+                e.stopPropagation(); // Prevent row click
+                CmdkUI.triggerCopy(code, e.target);
+                return;
+            }
+
+            // 2. Explicit Insert Button
+            if (e.target.classList.contains('insert-btn')) {
+                e.stopPropagation();
+                CmdkUI.triggerInsert(code, e.target);
+                return;
+            }
+            
+            // 3. Row Click (Default -> Insert)
+            const item = e.target.closest('.snippet-item');
+            if (item) {
+                // Find code from the insert button inside this row to be safe
+                const btn = item.querySelector('.insert-btn'); 
+                if (btn) CmdkUI.triggerInsert(btn.dataset.code, btn);
             }
         });
     },
@@ -208,8 +223,8 @@ const CmdkUI = {
                 e.preventDefault();
                 const visible = items();
                 if (visible.length > 0) {
-                    const btn = visible[idx].querySelector('.copy-btn');
-                    if (btn) CmdkUI.triggerCopy(btn.dataset.code, btn);
+                    const btn = visible[idx].querySelector('.insert-btn'); // Default Action: Insert
+                    if (btn) CmdkUI.triggerInsert(btn.dataset.code, btn);
                 }
             }
         });
@@ -229,13 +244,39 @@ const CmdkUI = {
         }
     },
 
-    triggerCopy: (code, btn) => {
+    triggerInsert: (code, btn) => {
+        window.postMessage({ type: 'LEETCODE_CMDK_INSERT', code: code }, '*');
+        
+        // Also copy as backup
         CmdkUI.copyToClipboard(code);
+
         if (btn) {
-            btn.innerText = "Copied!";
+            const originalText = btn.innerText;
+            btn.innerText = "Inserted!";
             btn.style.color = "#4caf50";
             btn.style.borderColor = "#4caf50";
         }
+        setTimeout(() => CmdkUI.close(), 200);
+    },
+
+    triggerCopy: (code, btn) => {
+        CmdkUI.copyToClipboard(code);
+        if (btn) {
+            const originalText = btn.innerText;
+            btn.innerText = "Copied!";
+            btn.style.color = "#4caf50";
+            btn.style.borderColor = "#4caf50";
+            
+            setTimeout(() => {
+                 btn.innerText = originalText;
+                 btn.style.color = "";
+                 btn.style.borderColor = "";
+            }, 1000);
+        }
+        // Do NOT close on copy, user might want to keep browsing or copy multiple? 
+        // Or close? User said "copy if that button is pressed". Usually means separate action.
+        // Let's close for consistency, or keep open. User didn't specify.
+        // Let's close to be safe.
         setTimeout(() => CmdkUI.close(), 200);
     }
 };

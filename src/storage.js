@@ -1,7 +1,5 @@
-// src/storage.js
-
+// namespace for storage 
 const CmdkStorage = {
-    // Helper for Robust Storage Calls
     get: async (key) => {
         try {
             return await chrome.storage.local.get(key);
@@ -22,7 +20,6 @@ const CmdkStorage = {
     handleError: (e) => {
         if (e.message && e.message.includes('Extension context invalidated')) {
             console.warn('[LeetCode CMDK] Extension updated. Reloading page...');
-            // Optional: Don't alert if we want it silent, but user requested fix
             alert("LeetCode CMDK has been updated. The page will now refresh.");
             location.reload();
         } else {
