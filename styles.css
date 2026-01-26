@@ -1,0 +1,232 @@
+/* Container for the entire extension UI to isolate styles */
+#leetcode-cmdk-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    z-index: 2147483647; /* Max z-index to be on top of everything */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+#leetcode-cmdk-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    /* backdrop-filter: blur(2px); Removed to prevent scroll glitches */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 15vh;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+#leetcode-cmdk-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Common Modal Styles */
+.cmdk-modal {
+    background: #121212;
+    border: 1px solid #333;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    width: 650px;
+    max-width: 90vw;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: #fff;
+    transform: scale(0.98);
+    transition: transform 0.2s ease;
+    min-height: 100px; /* Prevent collapse during empty state */
+}
+
+#leetcode-cmdk-overlay.visible .cmdk-modal {
+    transform: scale(1);
+}
+
+/* Language Selection Specifics */
+.lang-select-content {
+    padding: 32px;
+    text-align: center;
+}
+
+.lang-select-title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: #e0e0e0;
+}
+
+.lang-options {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.lang-btn {
+    background: #1e1e1e;
+    border: 1px solid #333;
+    color: #e0e0e0;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.lang-btn:hover {
+    background: #2d2d2d;
+    border-color: #555;
+    transform: translateY(-1px);
+}
+
+/* CMD K Palette Specifics */
+.cmdk-header {
+    border-bottom: 1px solid #2a2a2a;
+    padding: 12px 16px;
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cmdk-input {
+    background: transparent;
+    border: none;
+    flex: 1;
+    color: #fff;
+    font-size: 18px;
+    outline: none;
+}
+
+.lang-toggle-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #666;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.lang-toggle-btn:hover {
+    background: #1e1e1e;
+    color: #aaa;
+}
+
+.cmdk-body {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 8px;
+    position: relative; /* Needed for offsetTop calculation */
+}
+
+.snippet-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    cursor: default;
+    transition: background 0.1s;
+    position: relative;
+}
+
+.snippet-item:hover, .snippet-item.selected {
+    background: #1f1f1f;
+}
+
+/* 
+   Prevents "flicker" when scrolling via keyboard and the mouse cursor 
+   accidentally touches moving items.
+*/
+.cmdk-body.no-hover-interaction .snippet-item:hover {
+    background: transparent;
+}
+.cmdk-body.no-hover-interaction .snippet-item.selected {
+    background: #1f1f1f !important;
+}
+
+.snippet-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.snippet-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ececec;
+    margin-bottom: 2px;
+}
+
+.snippet-desc {
+    font-size: 14px;
+    color: #888;
+}
+
+.snippet-code-preview {
+    display: none; 
+    font-family: monospace;
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.snippet-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.copy-btn {
+    background: transparent;
+    border: 1px solid #333;
+    color: #aaa;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.copy-btn:hover {
+    background: #2a2a2a;
+    color: #fff;
+    border-color: #555;
+    background: #4caf5015; /* Subtle greenish tint on hover */
+}
+
+.copy-btn:active {
+    background: #333;
+}
+
+/* Scrollbar styling */
+.cmdk-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cmdk-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cmdk-body::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 4px;
+}

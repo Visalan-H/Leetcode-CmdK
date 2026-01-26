@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "LeetCode CMDK",
+  "version": "1.2",
+  "description": "A dark, minimal command palette for LeetCode syntax snippets.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://leetcode.com/*",
+    "*://*.leetcode.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://leetcode.com/*",
+        "*://*.leetcode.com/*"
+      ],
+      "js": [
+        "snippets.js",
+        "src/storage.js",
+        "src/ui.js",
+        "src/main.js"
+      ],
+      "css": [
+        "styles.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
