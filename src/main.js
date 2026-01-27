@@ -1,13 +1,20 @@
 window.PREFERRED_LANG = null;
 
 (async function init() {
-    console.log('[LeetCode CMDK] Initializing...');
+
 
     // Inject Page World Script
-    const script = document.createElement('script');
-    script.src = chrome.runtime.getURL('src/page-world.js');
-    script.onload = () => script.remove();
-    (document.head || document.documentElement).appendChild(script);
+    const snippetsScript = document.createElement('script');
+    snippetsScript.src = chrome.runtime.getURL('snippets.js');
+    snippetsScript.onload = () => {
+        snippetsScript.remove();
+        // Only load page-world after snippets are loaded
+        const script = document.createElement('script');
+        script.src = chrome.runtime.getURL('src/page-world.js');
+        script.onload = () => script.remove();
+        (document.head || document.documentElement).appendChild(script);
+    };
+    (document.head || document.documentElement).appendChild(snippetsScript);
 
     // Load language preference
     const data = await CmdkStorage.get('preferred_language');

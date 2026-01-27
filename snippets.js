@@ -1,21 +1,26 @@
 const SNIPPETS = {
     "java": [
+        // --- I/O ---
+        { label: "Print Line", code: "System.out.println(${1});", desc: "Print to stdout" },
+        { label: "Print Format", code: "System.out.printf(\"${1:%d}\", ${2:val});", desc: "Formatted print" },
+        
         // --- Data Structures ---
         { label: "HashMap", code: "Map<${1:Key}, ${2:Value}> map = new HashMap<>();", desc: "Key-Value pairs" },
         { label: "HashSet", code: "Set<${1:Type}> set = new HashSet<>();", desc: "Unique elements" },
-        { label: "TreeMap", code: "Map<${1:Key}, ${2:Value}> map = new TreeMap<>();", desc: "Sorted Key-Value pairs" },
-        { label: "TreeSet", code: "Set<${1:Type}> set = new TreeSet<>();", desc: "Sorted unique elements" },
         { label: "ArrayList", code: "List<${1:Type}> list = new ArrayList<>();", desc: "Dynamic array" },
-        { label: "LinkedList", code: "List<${1:Type}> list = new LinkedList<>();", desc: "Doubly linked list" },
         { label: "Stack", code: "Stack<${1:Type}> stack = new Stack<>();", desc: "LIFO structure" },
-        { label: "Queue (LinkedList)", code: "Queue<${1:Type}> queue = new LinkedList<>();", desc: "FIFO structure" },
         { label: "Deque (ArrayDeque)", code: "Deque<${1:Type}> deque = new ArrayDeque<>();", desc: "Double-ended queue (faster than Stack)" },
+        { label: "TreeMap", code: "Map<${1:Key}, ${2:Value}> map = new TreeMap<>();", desc: "Sorted Key-Value pairs" },
+        { label: "LinkedList", code: "List<${1:Type}> list = new LinkedList<>();", desc: "Doubly linked list" },
+        { label: "TreeSet", code: "Set<${1:Type}> set = new TreeSet<>();", desc: "Sorted unique elements" },
+        { label: "Queue (LinkedList)", code: "Queue<${1:Type}> queue = new LinkedList<>();", desc: "FIFO structure" },
         { label: "PriorityQueue (Min)", code: "PriorityQueue<${1:Type}> pq = new PriorityQueue<>();", desc: "Min Heap" },
         { label: "PriorityQueue (Max)", code: "PriorityQueue<${1:Type}> pq = new PriorityQueue<>(Collections.reverseOrder());", desc: "Max Heap" },
         { label: "PriorityQueue (Custom)", code: "PriorityQueue<${1:Type}> pq = new PriorityQueue<>((a, b) -> ${2:a - b});", desc: "Heap with custom comparator" },
         
         // --- Arrays & Integers ---
-        { label: "2D Array", code: "int[][] dp = new int[${1:rows}][${2:cols}];", desc: "Initialize matrix" },
+        { label: "Array", code: "${1:Type}[] arr = new ${1:Type}[${2:n}];", desc: "Initialize array" },
+        { label: "2D Array", code: "${1:Type}[][] dp = new ${1:Type}[${2:rows}][${3:cols}];", desc: "Initialize matrix" },
         { label: "Fill Array", code: "Arrays.fill(${1:arr}, ${2:-1});", desc: "Fill array with value" },
         { label: "Sort Array", code: "Arrays.sort(${1:arr});", desc: "Sort primitive array" },
         { label: "Sort List", code: "Collections.sort(${1:list});", desc: "Sort collection" },
@@ -36,6 +41,7 @@ const SNIPPETS = {
         
         // --- Conversion ---
         { label: "Array to List", code: "List<${1:Type}> list = new ArrayList<>(Arrays.asList(${2:arr}));", desc: "Convert Array to List" },
+        { label: "List to Array", code: "int[] arr = ${1:list}.stream().mapToInt(i -> i).toArray();", desc: "List<Integer> to int[]" },
         { label: "List to Array", code: "int[] arr = ${1:list}.stream().mapToInt(i -> i).toArray();", desc: "List<Integer> to int[]" }
     ],
     "cpp": [
@@ -76,7 +82,10 @@ const SNIPPETS = {
         // --- Loops ---
         { label: "For Loop", code: "for (int i = 0; i < ${1:n}; ++i) {\n    ${2}\n}", desc: "0 to n-1" },
         { label: "Range For", code: "for (auto& ${1:x} : ${2:v}) {\n    ${3}\n}", desc: "Iterate by reference" },
-        { label: "Iterator Loop", code: "for (auto it = ${1:mp}.begin(); it != ${1:mp}.end(); ++it) {\n    ${2}\n}", desc: "Iterator based loop" }
+        { label: "Iterator Loop", code: "for (auto it = ${1:mp}.begin(); it != ${1:mp}.end(); ++it) {\n    ${2}\n}", desc: "Iterator based loop" },
+        // --- I/O ---
+        { label: "Print Line", code: "cout << ${1} << endl;", desc: "Print with newline" },
+        { label: "Print", code: "cout << ${1};", desc: "Print without newline" }
     ]
 };
 

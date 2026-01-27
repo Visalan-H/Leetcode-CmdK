@@ -11,6 +11,7 @@
 ## Features
 
 - **Search**: Press `Cmd+K` or `Ctrl+K`.
+- **Autocomplete**: Typing naturally shows snippet suggestions.
 - **Code**: Get Java & C++ code fast.
 - **Clean**: Minimal UI.
 
@@ -27,6 +28,7 @@
 <details>
 <summary><strong>Java Snippets</strong></summary>
 
+- **I/O**: `Print Line`, `Print Format`
 - **Data Structures**: `HashMap`, `HashSet`, `TreeMap`, `TreeSet`, `ArrayList`, `LinkedList`, `Stack`, `Queue`, `Deque`, `PriorityQueue`
 - **Arrays**: `2D Array`, `Fill Array`, `Sort Array`, `Sort List`
 - **Strings**: `StringBuilder`, `String to Int`, `Int to String`, `Char to Int`, `String to Char Array`
@@ -37,6 +39,7 @@
 <details>
 <summary><strong>C++ Snippets</strong></summary>
 
+- **I/O**: `Print`, `Print Line`
 - **Data Structures**: `Vector`, `2D Vector`, `Unordered Map/Set`, `Map/Multiset`, `Stack`, `Queue`, `Deque`, `Priority Queue`, `Bitset`
 - **Algorithms**: `Sort`, `Custom Sort`, `Reverse`, `Max/Min Element`, `Accumulate`, `Memset`
 - **Search**: `Lower Bound`, `Upper Bound`
